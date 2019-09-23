@@ -1,0 +1,18 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: fraud-db
+  namespace: fraud-detection
+spec:
+  teamId: "ACID"
+  volume:
+    size: 20Gi
+  numberOfInstances: 1
+  users:
+    admin:  # database owner
+    - superuser
+    - createdb
+  databases:
+    fraud: admin  # dbname: owner
+  postgresql:
+    version: "10"
