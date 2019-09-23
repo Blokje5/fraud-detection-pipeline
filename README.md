@@ -13,5 +13,6 @@ Requirements:
 Running the app:
 
 ```bash
+docker-compose build # only needed when changing airflow dependencies
 docker-compose up
 ``` 
