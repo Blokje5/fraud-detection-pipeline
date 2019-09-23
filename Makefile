@@ -3,7 +3,7 @@ WAIT := 200s
 APPLY = kubectl apply --kubeconfig=$$(kind get kubeconfig-path --name test) --filename
 
 create:
-	-@kind create cluster --name test --wait $(WAIT)
+	-@kind create cluster --config deployments/kind/cluster.yaml --name test --wait $(WAIT)
 
 env:
 	@kind get kubeconfig-path --name test
@@ -21,6 +21,6 @@ postgres-operator:
 	@$(APPLY) https://operatorhub.io/install/postgres-operator.yaml
 
 app:
-	@$(APPLY) ./deployments/fraud-detection
+	@$(APPLY) deployments/fraud-detection
 
 .PHONY: create env delete list
