@@ -1,5 +1,6 @@
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
+from airflow.operators.postgres_operator import PostgresOperator
 from datetime import datetime, timedelta
 
 from staging_operator import (StagingOperator)
@@ -22,6 +23,11 @@ with dag as dag:
         task_id='finish_staging'
     )
 
+    create_schema = PostgresOperator(
+        task_id='create_schema',
+        sql='sql/create_schema_fraud.sql'
+    )
+
     load_ownership = StagingOperator(
         task_id='load_ownership',
         sql='sql/staging/tables/create_table_ownership.sql',
@@ -30,4 +36,4 @@ with dag as dag:
         path='/home/data/PGYR17_P062819/OP_DTL_OWNRSHP_PGYR2017_P06282019.csv'
     )
 
-    finish >> load_ownership
+    finish >> create_schema >> load_ownership
