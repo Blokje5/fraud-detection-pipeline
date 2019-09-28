@@ -4,10 +4,9 @@ from airflow.utils.decorators import apply_defaults
 from airflow.plugins_manager import AirflowPlugin
 
 class StagingOperator(BaseOperator):
-    template_fields = ('sql')
-    template_ext = ('.sql')
+    template_fields = ('sql',)
+    template_ext = ('.sql',)
     ui_color = '#ededed'
-
 
     @apply_defaults
     def __init__(
@@ -32,7 +31,7 @@ class StagingOperator(BaseOperator):
     
     def execute(self, context):
         self.hook = PostgresHook(postgres_conn_id=self.postgres_conn_id)
-        
+
         self.log.info('Executing CREATE command')
         self.hook.run(self.sql, self.autocommit)
         self.log.info('Finished CREATE command')
