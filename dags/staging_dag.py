@@ -36,7 +36,6 @@ with dag as dag:
         path='/home/data/PGYR17_P062819/OP_DTL_OWNRSHP_PGYR2017_P06282019.csv'
     )
 
-
     load_npi_drug = StagingOperator(
         task_id='load_npi_drug',
         sql='sql/staging/tables/create_table_npi_drug.sql',
@@ -47,4 +46,13 @@ with dag as dag:
     )
 
 
-    finish >> create_schema >> [load_ownership, load_npi_drug]
+    load_payments = StagingOperator(
+        task_id='load_payments',
+        sql='sql/staging/tables/create_table_payments.sql',
+        schema='fraud',
+        table='payments',
+        path='/home/data/PGYR17_P062819/OP_DTL_GNRL_PGYR2017_P06282019.csv',
+        format='text'
+    )
+
+    create_schema >> [load_ownership, load_npi_drug, load_payments] >> finish
