@@ -16,6 +16,7 @@ class StagingOperator(BaseOperator):
         table,
         path,
         postgres_conn_id='postgres_default',
+        format='csv',
         autocommit=False,
         parameters=None,
         *args, **kwargs
@@ -26,6 +27,7 @@ class StagingOperator(BaseOperator):
         self.table = table
         self.path = path
         self.postgres_conn_id = postgres_conn_id
+        self.format = format
         self.autocommit = autocommit
         self.parameters = parameters
     
@@ -39,11 +41,12 @@ class StagingOperator(BaseOperator):
         copy_query = """
         COPY {schema}.{table}
         FROM '{path}'
-        DELIMITERS ',' CSV
+        WITH FORMAT ('{format}')
         """.format(
             schema=self.schema,
             table=self.table,
-            path = self.path
+            path = self.path,
+            format = self.format
         )
 
         self.log.info('Executing COPY Command')
