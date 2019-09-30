@@ -1,4 +1,4 @@
-CREATE TABLE fraud.NPI_DRUG IF NOT EXISTS (npi text,
+CREATE TABLE IF NOT EXISTS fraud.NPI_DRUG (npi text,
 nppes_provider_last_org_name text,
 nppes_provider_first_name text,
 nppes_provider_city text,
