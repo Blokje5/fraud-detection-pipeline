@@ -17,9 +17,6 @@ services:
           - POSTGRES_USER=airflow
           - POSTGRES_PASSWORD=airflow
           - POSTGRES_DB=airflow
-          # To prevent connection issues on restart: https://airflow.readthedocs.io/en/stable/howto/secure-connections.html
-          - AIRFLOW_CONN_POSTGRES_DEFAULT=postgres://admin:password@fraud:5432/fraud
-          - AIRFLOW__CORE__FERNET_KEY=F5JDrcsof54xWE_CXR93oxe1U341Pncnc1ULJZmJijw=
     webserver:
         image: puckel/docker-airflow:1.10.4
         build:
@@ -32,6 +29,9 @@ services:
         environment:
             - LOAD_EX=n
             - EXECUTOR=Local
+            # To prevent connection issues on restart: https://airflow.readthedocs.io/en/stable/howto/secure-connections.html
+            - AIRFLOW_CONN_POSTGRES_DEFAULT=postgres://admin:password@fraud:5432/fraud
+            - AIRFLOW__CORE__FERNET_KEY=F5JDrcsof54xWE_CXR93oxe1U341Pncnc1ULJZmJijw=
         volumes:
             - ./dags:/usr/local/airflow/dags
             - ./plugins:/usr/local/airflow/plugins
