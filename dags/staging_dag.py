@@ -4,6 +4,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from datetime import datetime, timedelta
 
 from staging_operator import (StagingOperator)
+from postgres_value_check_operator import PostgresValueCheckOperator
 
 DAG_NAME = 'staging-dag'
 
@@ -19,7 +20,7 @@ dag = DAG(
 )
 
 with dag as dag:
-    finish = DummyOperator(
+    finish_staging = DummyOperator(
         task_id='finish_staging'
     )
 
@@ -55,5 +56,27 @@ with dag as dag:
         path='/home/data/PGYR17_P062819/OP_DTL_GNRL_PGYR2017_P06282019.csv',
         copy_options="DELIMITER ',' CSV HEADER"
     )
+    
+    check_ownership = PostgresValueCheckOperator(
+        task_id = 'check_ownership',
+        sql = 'sql/staging/tests/test_table_ownership.sql',
+        pass_value=True
+    )
 
-    create_schema >> [load_ownership, load_npi_drug, load_payments] >> finish
+    check_npi_drug = PostgresValueCheckOperator(
+        task_id = 'check_npi_drug',
+        sql = 'sql/staging/tests/test_table_npi_drug.sql',
+        pass_value=True
+    )
+
+    check_payments = PostgresValueCheckOperator(
+        task_id = 'check_payments',
+        sql = 'sql/staging/tests/test_table_payments.sql',
+        pass_value=True
+    )
+
+    finish_tests = DummyOperator(
+        task_id='finish_tests'
+    )
+    
+    create_schema >> [load_ownership, load_npi_drug, load_payments] >> finish_staging >> [check_ownership, check_npi_drug, check_payments] >> finish_tests
