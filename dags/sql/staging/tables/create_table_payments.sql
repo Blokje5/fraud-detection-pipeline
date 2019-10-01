@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS fraud.PAYMENTS (Change_Type text,
+CREATE TABLE IF NOT EXISTS staging.PAYMENTS (Change_Type text,
 Covered_Recipient_Type text,
 Teaching_Hospital_CCN text,
 Teaching_Hospital_ID text,

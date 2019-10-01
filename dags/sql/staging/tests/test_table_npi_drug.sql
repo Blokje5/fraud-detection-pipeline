@@ -1,1 +1,1 @@
-SELECT COUNT(*) > 0 FROM fraud.NPI_DRUG
+SELECT COUNT(*) > 0 FROM staging.NPI_DRUG

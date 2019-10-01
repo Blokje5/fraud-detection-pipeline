@@ -26,13 +26,13 @@ with dag as dag:
 
     create_schema = PostgresOperator(
         task_id='create_schema',
-        sql='sql/create_schema_fraud.sql'
+        sql='sql/staging/create_schema_staging.sql'
     )
 
     load_ownership = StagingOperator(
         task_id='load_ownership',
         sql='sql/staging/tables/create_table_ownership.sql',
-        schema='fraud',
+        schema='staging',
         table='ownership',
         path='/home/data/PGYR17_P062819/OP_DTL_OWNRSHP_PGYR2017_P06282019.csv',
         copy_options="DELIMITER ',' CSV HEADER"
@@ -41,7 +41,7 @@ with dag as dag:
     load_npi_drug = StagingOperator(
         task_id='load_npi_drug',
         sql='sql/staging/tables/create_table_npi_drug.sql',
-        schema='fraud',
+        schema='staging',
         table='npi_drug',
         path='/home/data/PartD_Prescriber_PUF_NPI_DRUG_17/PartD_Prescriber_PUF_NPI_Drug_17.txt',
         copy_options='HEADER'
@@ -51,7 +51,7 @@ with dag as dag:
     load_payments = StagingOperator(
         task_id='load_payments',
         sql='sql/staging/tables/create_table_payments.sql',
-        schema='fraud',
+        schema='staging',
         table='payments',
         path='/home/data/PGYR17_P062819/OP_DTL_GNRL_PGYR2017_P06282019.csv',
         copy_options="DELIMITER ',' CSV HEADER"

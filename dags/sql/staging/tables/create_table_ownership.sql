@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS fraud.OWNERSHIP (Change_Type text,
+CREATE TABLE IF NOT EXISTS staging.OWNERSHIP (Change_Type text,
     Physician_Profile_ID text,
     Physician_First_Name text,
     Physician_Middle_Name text,
