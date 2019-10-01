@@ -16,7 +16,7 @@ dag = DAG(
     DAG_NAME,
     catchup=False,
     default_args=args,
-    schedule_interval= '00 00 * * *'
+    schedule_interval= '00 07 * * *'
 )
 
 with dag as dag:

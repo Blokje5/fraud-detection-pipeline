@@ -1,0 +1,1 @@
+SELECT COUNT(*) > 0 FROM enriched.DRUG_DIM
