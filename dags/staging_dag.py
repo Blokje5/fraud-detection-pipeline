@@ -43,8 +43,7 @@ with dag as dag:
         sql='sql/staging/tables/create_table_npi_drug.sql',
         schema='staging',
         table='npi_drug',
-        path='/home/data/PartD_Prescriber_PUF_NPI_DRUG_17/PartD_Prescriber_PUF_NPI_Drug_17.txt',
-        copy_options='HEADER'
+        path='/home/data/PartD_Prescriber_PUF_NPI_DRUG_17/PartD_Prescriber_PUF_NPI_Drug_17.txt'
     )
 
 
