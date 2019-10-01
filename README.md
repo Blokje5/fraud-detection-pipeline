@@ -27,6 +27,12 @@ The goal of the project is to create an ETL pipeline to load in provider payment
 - Is there a specific region in which certain pharmaceutical companies are active
 - Which type of providers recieved the most payments
 
+## Choice of tools
+
+Airflow: Airflow provides the scheduling capabilities for the ETL pipeline and ensures data is loaded in the correct order. Airflow ensures that when failure occurs in the ETL pipeline, downstream dependent task are not triggered.
+Postgresql: Postgresql serves as the Data Warehouse as it can be run locally. It is not an MPP-database, but given the relativily small size of the datasets (biggest dataset is ±7GB), it serves its purpose. Postgres provides a couple of useful functions such as COPY FROM (CSV/TXT), and due to its plugin based nature can easily be extended to provide MPP like capabilities. It also has extensive data type support. Postgres is also compatible with Redshift, making migration to a more scalable system easier.
+Docker: Docker provides the ability to easily bootstrap the project on a local machine. Again, due to the size of the data sets, this should serve its purpose.
+
 ## Data 
 
 The data for this project can be found in the following locations:
