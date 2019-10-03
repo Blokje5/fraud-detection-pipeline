@@ -4,6 +4,21 @@ from airflow.utils.decorators import apply_defaults
 from airflow.plugins_manager import AirflowPlugin
 
 class StagingOperator(BaseOperator):
+    """
+    Stages data into postgres
+
+    :param str task_id: a unique, meaningful id for the task (inhereted)
+    :param str sql: the sql to be executed. (templated)
+        Can receive a str representing a sql statement,
+        a list of str (sql statements), or reference to a template file.
+        Template reference are recognized by str ending in '.sql'
+    :param str schema: The schema in which the COPY statement will be executed
+    :param str table: The table in which the data will be copied
+    :param str path: The path where the data will be loaded from
+    :param str postgres_conn_id: reference to specific Postgres connection id
+    :param any copy_options: Additional options to add to the COPY FROM command (e.g. CSV HEADER)  
+    """
+
     template_fields = ('sql',)
     template_ext = ('.sql',)
     ui_color = '#ededed'
