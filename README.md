@@ -59,3 +59,40 @@ The data for this project can be found in the following locations:
 
 - https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/Part-D-Prescriber.html
 - https://www.cms.gov/Research-Statistics-Data-and-Systems/Statistics-Trends-and-Reports/Medicare-Provider-Charge-Data/PartD2017.html
+
+## Data Dictionary
+
+The data dictionary provides documentation on the tables in Postgres.
+
+Layers:
+
+- Staging: Meant to provide a place to load the data.
+- Enriched: Provides a place for transformed and enriched tables
+
+Staging:
+
+- PAYMENTS: Loaded from 'data/PGYR17_P062819/OP_DTL_GNRL_PGYR2017_P06282019.csv'
+- OWNERSHIP: Loaded from 'data/PGYR17_P062819/OP_DTL_OWNRSHP_PGYR2017_P06282019.csv'
+- NPI_DRUG: Loaded from 'data/PartD_Prescriber_PUF_NPI_DRUG_17/PartD_Prescriber_PUF_NPI_Drug_17.txt'
+
+Enriched:
+
+- PRESCRIPTIONS: Fact table to provide counts on prescriptions of a specific drug for a specific provider:
+    - ID: ID for the fact
+    - DRUG_NAME: Name of the prescription Drug
+    - PROVIDER_ID: ID of the provider
+    - CLAIM_COUNT: Number of medicare claims submitted for this specific drug provider combination
+    - BENEFICIARY_COUNT: Count of the beneficiaries  for this specific drug provider combination
+
+- DRUG_DIM: Provides dimensional data on specific drugs
+    - DRUG_NAME: Name of the prescription Drug
+    - GENERIC_NAME: Generic name of the prescription Drug
+
+- PROVIDER_DIM:
+    - ID: ID of the provider
+    - LAST_OR_ORGANISATION_NAME: Last name or organisation name of the provider
+    - FIRST_NAME: First name of the provider
+    - CITY: City where the provider resides
+    - STATE: State where the provider resides
+    - SPECIALITY: Medical speciality of the provider
+    - AMOUNT: Total amount the provider recieved outside of research grants
